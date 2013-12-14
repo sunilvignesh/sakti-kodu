@@ -2,22 +2,18 @@ from flask import Flask
 from flask import render_template
 from flask.ext.pymongo import PyMongo
 
+import utils
+
 
 app = Flask("sakti_kodu")
 mongo = PyMongo(app)
 
 @app.route("/street/<street_name>")
 def street(street_name):
-	pipeline = [{"$match":{"street":street_name}},{"$group":{"_id":"street","total":{"$sum":1},"energy_dist":{"$addToSet": "$energy"}}}, { "$project" : {
-        "streetlights" : "$total" ,
-        "total_energry" : "$energy" ,
-        "total_power" : "$power",
-        "energy_dist" : "$energy_dist"
-    }}]
+	headers = mongo.db.streetlights.aggregate(utils.streets_pipeline(street_name))
+	streetlights = mongo.db.streetlights.find({"street": street_name})
 	
-	data_agg = mongo.db.streetlights.aggregate(pipeline)
-	print str(data_agg["result"])
-	return render_template('index.html', aggregate = data_agg["result"])
+	return render_template('index.html', headers = headers, streetlights = to_list(streetlights))
 
 @app.route("/ward/<ward_number>")
 def ward(ward_number):
