@@ -2,8 +2,8 @@
 <html class="no-js" lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/sb-admin.css" rel="stylesheet">
     <title>Sakthi Kodu | Tamil Nadu</title>
   </head>
   <body>
@@ -11,15 +11,15 @@
     <div class="masthead pull-down">
         <ul class="nav nav-pills  pull-right">
           <li class="disabled"><a href="#">View By :</a></li>
-          <li class="active"><a href="#">Tamil Nadu</a></li>
+          <li><a href="#">Tamil Nadu</a></li>
           <li><a href="#">District</a></li>
           <li><a href="#">Ward</a></li>
-          <li><a href="#">Street</a></li>
+          <li class="active"><a href="#">Street</a></li>
         </ul>
       <h1>Sakthi Kodu</h1>
     </div>
     <div class="pull-down-2">
-    <h3>Street Wise Energy Consumption</h3>
+    <h3>{{headers.title}}</h3>
     </div>
     <br>
     <div class="row">
@@ -27,28 +27,28 @@
     <div class="row">
     <div class="panel panel-info col-lg-6">
       <div class="panel-heading pull-center">
-      <p class="announcement-heading">21</p>
-      <p class="announcement-text">Street Lights</p>
+      <p class="announcement-heading">{{headers.key1}}</p>
+      <p class="announcement-text">{{headers.value1}}</p>
       </div>
     </div>
     <div class="panel panel-info col-lg-6">
       <div class="panel-heading pull-center">
-      <p class="announcement-heading">678</p>
-      <p class="announcement-text">kW Power</p>
+      <p class="announcement-heading">{{headers.key2}}</p>
+      <p class="announcement-text">{{headers.value2}}</p>
       </div>
     </div>
     </div>
     <div class="row">
     <div class="panel panel-info col-lg-6">
       <div class="panel-heading pull-center">
-      <p class="announcement-heading">108</p>
-      <p class="announcement-text">kWh Energy</p>
+      <p class="announcement-heading">{{headers.key3}}</p>
+      <p class="announcement-text">{{headers.value3}}</p>
       </div>
     </div>
     <div class="panel panel-info col-lg-6">
       <div class="panel-heading pull-center">
-      <p class="announcement-heading">4.5</p>
-      <p class="announcement-text">Luminance</p>
+      <p class="announcement-heading">{{headers.key4}}</p>
+      <p class="announcement-text">{{headers.value4}}</p>
       </div>
     </div>
     </div>
@@ -73,62 +73,32 @@
                   </tr>
                 </thead>
                 <tbody>
+                {% for light in streetlights %}
                 <tr>
-                    <td>1</td>
-                    <td>Yellow Bulb</td>
-                    <td>ON</td>
-                    <td>67W</td>
-                    <td>4</td>
-                    <td>200kWh</td>
+                    <td>{{light.id}}</td>
+                    <td>{{light.type}}</td>
+                    <td>{{light.status}}</td>
+                    <td>{{light.power}}</td>
+                    <td>{{light.luminance}}</td>
+                    <td>{{light.energy}}</td>
                   </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Yellow Bulb</td>
-                    <td>ON</td>
-                    <td>67W</td>
-                    <td>4</td>
-                    <td>200kWh</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Yellow Bulb</td>
-                    <td>ON</td>
-                    <td>67W</td>
-                    <td>4</td>
-                    <td>200kWh</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>Yellow Bulb</td>
-                    <td>ON</td>
-                    <td>67W</td>
-                    <td>4</td>
-                    <td>200kWh</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td>Yellow Bulb</td>
-                    <td>ON</td>
-                    <td>67W</td>
-                    <td>4</td>
-                    <td>200kWh</td>
-                  </tr>
+                  {% endfor %}
                   </tbody>
               </table>
     </div>
     </div>
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
-    <script src="js/morris/chart-data-morris.js"></script>
-    <script src="js/tablesorter/jquery.tablesorter.js"></script>
-    <script src="js/tablesorter/tables.js"></script>
+    <script src="/static/js/morris/chart-data-morris.js"></script>
+    <script src="/static/js/tablesorter/jquery.tablesorter.js"></script>
+    <script src="/static/js/tablesorter/tables.js"></script>
     <!--[if lte IE 8]><script src="js/excanvas.min.js"></script><![endif]-->
-  <script src="js/flot/jquery.flot.js"></script>
-  <script src="js/flot/jquery.flot.tooltip.min.js"></script>
-  <script src="js/flot/jquery.flot.resize.js"></script>
-  <script src="js/flot/jquery.flot.pie.js"></script>
-    <script src="js/charts.js"></script>
+  <script src="/static/js/flot/jquery.flot.js"></script>
+  <script src="/static/js/flot/jquery.flot.tooltip.min.js"></script>
+  <script src="/static/js/flot/jquery.flot.resize.js"></script>
+  <script src="/static/js/flot/jquery.flot.pie.js"></script>
+    <script src="/static/js/charts.js"></script>
   </body>
 </html>
