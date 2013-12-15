@@ -4,10 +4,7 @@ $(document).ready(function(){
 	var offset = 0;
 	plot();
 	function plot(){
-		var sin = [];
-		for (var i = 0; i < 12; i += 0.2) {
-			sin.push([i, Math.sin(i + offset)]);
-		}
+		var sin ={{headers.energy_dist}};
 	
 		var options = {
 			series: {

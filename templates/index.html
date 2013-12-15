@@ -33,21 +33,21 @@
     </div>
     <div class="panel panel-info col-lg-6">
       <div class="panel-heading pull-center">
-      <p class="announcement-heading">{{headers.total_power}}</p>
-      <p class="announcement-text">kW Power</p>
+      <p class="announcement-heading">{{headers["total_power"]}}</p>
+      <p class="announcement-text">Watt Power</p>
       </div>
     </div>
     </div>
     <div class="row">
     <div class="panel panel-info col-lg-6">
       <div class="panel-heading pull-center">
-      <p class="announcement-heading">{{headers.total_energy}}</p>
-      <p class="announcement-text">kWh Energy</p>
+      <p class="announcement-heading">{{headers["total_energy"] | round(2)}}</p>
+      <p class="announcement-text">WattHour Energy</p>
       </div>
     </div>
     <div class="panel panel-info col-lg-6">
       <div class="panel-heading pull-center">
-      <p class="announcement-heading">{{headers.total_luminance}}</p>
+      <p class="announcement-heading">{{headers["total_luminance"] | round(3)}}</p>
       <p class="announcement-text">Luminance</p>
       </div>
     </div>
@@ -65,7 +65,6 @@
                 <thead>
                   <tr>
                     <th class="header headerSortUp">Street Light ID</th>
-                    <th class="header">Type</th>
                     <th class="header">Status</th>
                     <th class="header">Power</th>
                     <th class="header">Luminance</th>
@@ -76,7 +75,6 @@
                 {% for light in streetlights %}
                 <tr>
                     <td>{{light.id}}</td>
-                    <td>{{light.type}}</td>
                     <td>{{light.status}}</td>
                     <td>{{light.power}}</td>
                     <td>{{light.luminance}}</td>
@@ -87,9 +85,9 @@
               </table>
     </div>
     </div>
-    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/static/js/jquery.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="/static/js/raphael-min.js"></script>
     <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
     <script src="/static/js/morris/chart-data-morris.js"></script>
     <script src="/static/js/tablesorter/jquery.tablesorter.js"></script>
@@ -99,6 +97,52 @@
   <script src="/static/js/flot/jquery.flot.tooltip.min.js"></script>
   <script src="/static/js/flot/jquery.flot.resize.js"></script>
   <script src="/static/js/flot/jquery.flot.pie.js"></script>
-    <script src="/static/js/charts.js"></script>
+  <script>
+    $(document).ready(function(){
+  console.log("document ready");
+  var offset = 0;
+  plot();
+  function plot(){
+    
+    var options = {
+      series: {
+        lines: { show: true },
+        points: { show: true }
+      },
+      grid: {
+        hoverable: true //IMPORTANT! this is needed for tooltip to work
+      },
+      yaxis: { min: 100, max: 300  },
+      tooltip: true,
+      tooltipOpts: {
+        content: "'%s' of %x.1 is %y.4",
+        shifts: {
+          x: -60,
+          y: 25
+        }
+      }
+    };
+
+    var dist = {{timeseries}};
+    var data = [];
+    var interval = 0;
+    for(var i=0;i<dist.length;i++){
+      
+      data.push([i ,dist[i]]);
+      interval += 2; 
+    }  
+    console.log(data);
+    var plotObj = $.plot( $("#flot-chart-line"),
+      [ { data: data, label: "x-axis: Timestamps, y-axis: Energy(kWh)"}],
+      options );
+  }
+});
+  function refreshPage() {
+      window.location = location.href;
+  }
+
+  setTimeout("refreshPage();", 100);
+
+    </script>
   </body>
 </html>
